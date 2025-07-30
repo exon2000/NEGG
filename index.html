@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS POC Test</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000 url('http://bit.ly/471bfBk') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Courier New', monospace;
+            color: #0f0;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid #0f0;
+            width: 80%;
+            margin: 10% auto;
+            padding: 20px;
+            box-shadow: 0 0 15px #0f0;
+        }
+        h1 {
+            text-shadow: 0 0 5px #0f0;
+        }
+        .code {
+            background: #111;
+            padding: 15px;
+            border-left: 3px solid #0f0;
+            text-align: left;
+            overflow-x: auto;
+        }
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lucid walked on this bitch<span class="blink">_</span></h1>
+        <div class="code">
+            [√] Payload injected successfully<br>
+            [√] Image replaced: http://bit.ly/471bfBk<br>
+            [√] DOM modification confirmed
+        </div>
+        <p>System vulnerable to stored XSS</p>
+    </div>
+
+    <script>
+        // Vérification du changement d'image
+        const bg = window.getComputedStyle(document.body).backgroundImage;
+        console.log("Background image set to:", bg);
+    </script>
+</body>
+</html>
